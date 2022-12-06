@@ -1,12 +1,15 @@
 //import logo from './logo.svg';
 import { useState } from 'react';
 import './App.css';
-import './Kosar.css';
-import './Konyv.css'
-import Konyv from './Konyv.js';
-import Kosar from './Kosar.js'
+import './components/public/Kosar.css';
+import './components/public/Konyv.css'
+import Konyv from './components/public/Konyv.js';
+import Kosar from './components/public/Kosar.js'
 import KosarModel from './Model/KosarModel.js';
-
+import Layout from "./pages/Layout";
+import Public from './pages/Public.js';
+import Admin from './pages/Admin.js';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 const konyvTomb=[
 {   id:1,
     cim:"Malevil",
@@ -27,61 +30,23 @@ const konyvTomb=[
 ]
 function App() {
   /** State-ek, reprezentálják az oldal állapotát és befrissítik az oldalra vonatkozó részét */
-  const [db, setDb] = useState(0);
-  const [osszAr, setOsszAr] = useState(0);
-  const [kosaram, setKosaram] = useState([]);
-  const km = new KosarModel(kosaram);
-  function kosarKezeles(adat){
-    setDb(km.getDb());
-    setOsszAr(osszAr+adat.ar);
-    km.setKosar(adat);
-    setKosaram(km.getKosar());
-    console.log(kosaram);
-  }
   return (
     <div className="App">
-      <header className="App-header">{
-        /** 
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-      </a>*/}
+      <header className="App-header">
+
       <h1>Könyv Áruház</h1>
       </header>
-      <section><p>A könyvek db száma: {db}</p></section>
-      <article>
-      <div className="konyvek">
+     
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Public />} />
+          <Route path="admin" element={<Admin />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
 
-      {
-        konyvTomb.map((konyv, index)=>{
-          return(<Konyv konyvObj={konyv} key={index} kosarKezeles={kosarKezeles}/>);
-        }
-        )
-      }
-
-
-    </div>
-      </article>
-      <section><p>Konyvek összára:{osszAr}</p></section>
-      <section>
-      <table><thead><tr>
-      <th>cím</th><th>szerzo</th><th>ár</th><th>db</th>
-      </tr></thead>
-      <tbody>
-      {kosaram.map((konyv,index)=>{
-        return(<Kosar kosarObj={konyv} key={index}/>)
-      })}
-      </tbody>
-      </table>
-      </section>
+  
       <footer><p>Xu Jiyu</p></footer>
     </div>
   );

@@ -1,3 +1,5 @@
+import { waitForElementToBeRemoved } from "@testing-library/react";
+
 class KosarModel{
     #kosaram = []
     #db
@@ -10,13 +12,14 @@ class KosarModel{
     getKosar() {
         return this.#kosaram
     }
+    elemHozzaad(id){
+        this.#kosaram[this.#kosaram.findIndex((elem)=>{
+            return elem.id == id
+        })].db += 1
+    }
     setKosar(kosaram){
-        console.log(kosaram)
-        if(this.konyvVizsgalas(kosaram)){
-            console.log()
-            this.#kosaram[this.#kosaram.findIndex((elem)=>{
-                return elem.id = kosaram.id
-            })].id = kosaram.db+1
+        if(this.konyvVizsgalas(kosaram)){ 
+            this.elemHozzaad(kosaram.id)
         }
         else{
             kosaram.db=1

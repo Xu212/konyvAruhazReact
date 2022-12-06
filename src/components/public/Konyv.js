@@ -1,7 +1,7 @@
 import './Konyv.css'
 function Konyv(props){
     function kosarba(){
-        console.log(props.konyvObj.ar)
+        //console.log(props.konyvObj.ar)
         //app js kosárkezelésének hívása
         props.kosarKezeles(props.konyvObj);
     }
